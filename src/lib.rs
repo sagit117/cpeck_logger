@@ -38,7 +38,7 @@ pub struct Logger {
 
 impl fmt::Display for LogLevel {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match *self {
+        match self {
             LogLevel::DEBUG => fmt::write(f, format_args!("DEBUG")),
             LogLevel::INFO => fmt::write(f, format_args!("INFO")),
             LogLevel::WARNING => fmt::write(f, format_args!("WARNING")),
