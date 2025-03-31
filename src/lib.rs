@@ -12,6 +12,24 @@ pub enum LogLevel {
     ERROR = 40,
 }
 
+/// Логгер.
+/// 
+/// В качестве источника вывода лога можно применить файл или другую цель реализующую трейт std::io::Write
+/// 
+/// # Example
+/// 
+/// ```
+/// let f = std::io::stdout();
+/// 
+/// let mut logger = cpeck_logger::Logger {
+///     out: Box::new(f),
+///     level: cpeck_logger::LogLevel::ALL,
+///     formatter: |message: &str, level: cpeck_logger::LogLevel| -> String { format!("[{: <7}] {}\n", level.to_string(), message) }
+/// };
+///
+/// logger.error("Ошибка");
+/// logger.info("Информация");
+/// ```
 pub struct Logger {
     pub out: Box<dyn Write>,
     pub level: LogLevel,
