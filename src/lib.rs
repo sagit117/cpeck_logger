@@ -68,7 +68,7 @@ impl Logger {
     fn log(&mut self, message: &str, level: LogLevel) -> Result<(), Box<dyn std::error::Error>> {
         if self.level <= level {
             let format_string = (self.formatter)(message, level);
-            self.out.write_all(format_string.as_bytes())?;
+            self.out.write(format_string.as_bytes())?;
         }
 
         Ok(())
