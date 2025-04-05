@@ -49,22 +49,6 @@ impl fmt::Display for LogLevel {
 }
 
 impl Logger {
-    pub fn debug(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
-        self.log(message, LogLevel::DEBUG)
-    }
-
-    pub fn info(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
-        self.log(message, LogLevel::INFO)
-    }
-
-    pub fn warning(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
-        self.log(message, LogLevel::WARNING)
-    }
-
-    pub fn error(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
-        self.log(message, LogLevel::ERROR)
-    }
-
     fn log(&mut self, message: &str, level: LogLevel) -> Result<(), Box<dyn std::error::Error>> {
         if self.level <= level {
             let format_string = (self.formatter)(message, level);
@@ -73,4 +57,31 @@ impl Logger {
 
         Ok(())
     }
+}
+
+pub type LogResult = Result<(), Box<(dyn std::error::Error + 'static)>>;
+
+impl LogWriter<LogResult> for Logger {
+    fn debug(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
+        self.log(message, LogLevel::DEBUG)
+    }
+
+    fn info(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
+        self.log(message, LogLevel::INFO)
+    }
+
+    fn warning(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
+        self.log(message, LogLevel::WARNING)
+    }
+
+    fn error(&mut self, message: &str) -> Result<(), Box<(dyn std::error::Error + 'static)>> {
+        self.log(message, LogLevel::ERROR)
+    }
+}
+
+pub trait LogWriter<T> {
+    fn info(&mut self, message: &str) -> T;
+    fn warning(&mut self, message: &str) -> T;
+    fn debug(&mut self, message: &str) -> T;
+    fn error(&mut self, message: &str) -> T;
 }
