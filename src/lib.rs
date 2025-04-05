@@ -12,6 +12,25 @@ pub enum LogLevel {
     ERROR = 40,
 }
 
+impl LogLevel {
+    /// Метод воссоздаст Level из строки или вернет Level::ALL, если операция не будет успешной.
+    pub fn from_string(str: &str) -> LogLevel {
+        let level = str.to_uppercase();
+
+        if level.eq("DEBUG") {
+            LogLevel::DEBUG
+        } else if level.eq("ONFO") {
+            LogLevel::INFO
+        } else if level.eq("WARNING") {
+            LogLevel::WARNING
+        } else if level.eq("ERROR") {
+            LogLevel::ERROR
+        } else {
+            LogLevel::ALL
+        }
+    }
+}
+
 /// Логгер.
 /// 
 /// В качестве источника вывода лога можно применить файл или другую цель реализующую трейт std::io::Write
