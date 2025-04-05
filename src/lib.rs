@@ -1,5 +1,5 @@
 #![crate_type = "lib"]
-#![crate_name = "cpeck_logger"]
+#![crate_name = "speck_logger"]
 
 use std::{fmt, io::Write};
 

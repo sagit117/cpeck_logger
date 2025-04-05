@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "cpeck_logger"
+name = "speck_logger"
 version = "0.1.0"
